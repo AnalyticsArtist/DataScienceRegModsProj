@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>The Effects of Transmission Type on MPG</title>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>The Effects of Transmission Type on MPG</h1>
+
+<h2>Executive Summary</h2>
+
+<p>I can say with absolute certainty that manual transition increases MPG more than having an automatic transition. In every valid model I ran manual transmission variable was always positive.  The degree of how much a manual transmission is better than automatic varied throughout the modeling process.  In the final model, manual transmission shows as it can increase MPG by 11.6 MPG and more so for lighter cars.</p>
+
+<p>The approach I have taken in this analysis is to include transmission type even though one can show a slightly superior model without it.  However, a superior model without transmission type isn&#39;t the point of this exercises and more importantly doesn&#39;t answer the main questions.</p>
+
+<h2>Final Model</h2>
+
+<p>The model has a 85% Adjusted R-Squared.  It contains three variables (transmission type, weight, &amp; number of cylinders) along with transmission &amp; weight interaction.  All variables are significant to the 10% level and the model&#39;s residual is normal as tested with the Shapiro normality test.</p>
+
+<p>The manual type transmission has a coefficient of 11.569 mean than having a manual transmission increases MPG by that amount.  We also point out the fact of the interaction variable with manual transmission vs. weight as negative meaning the higher the weight the less the MPG.  This means manual transmission of effect decreases by about 4 miles for every 1,000 lbs.</p>
+
+<p>The model also includes weight and number of cylinders both of which are negative meaning the higher the weight the lower the MPG and same for cylinders.</p>
+
+<p>Finally, residual plot are ok but not great.</p>
+
+<pre><code>
+Call:
+lm(formula = mpg ~ am + wt + am * wt + cyl, data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.541 -1.538 -0.678  1.316  5.283 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   29.775      2.840   10.48  7.9e-11 ***
+amManual      11.569      4.088    2.83   0.0089 ** 
+wt            -2.399      0.844   -2.84   0.0086 ** 
+cyl6          -2.710      1.357   -2.00   0.0565 .  
+cyl8          -4.776      1.556   -3.07   0.0050 ** 
+amManual:wt   -4.068      1.397   -2.91   0.0073 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 2.3 on 26 degrees of freedom
+Multiple R-squared:  0.877, Adjusted R-squared:  0.854 
+F-statistic: 37.2 on 5 and 26 DF,  p-value: 4.74e-11
+</code></pre>
+
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  final_model$residuals
+W = 0.9448, p-value = 0.1027
+</code></pre>
+
+<p><img src="figure/Final_Model1.png" alt="plot of chunk Final_Model"> <img src="figure/Final_Model2.png" alt="plot of chunk Final_Model"> </p>
+
+<h2>The Modeling Process</h2>
+
+<h3>Exploratory Data Analysis</h3>
+
+<p>Pair-wise scatter plots and correlations charts are used.  Code is borrowed from <a href="http://gettinggeneticsdone.blogspot.com/2011/07/scatterplot-matrices-in-r.html">http://gettinggeneticsdone.blogspot.com/2011/07/scatterplot-matrices-in-r.html</a>.  Please see code and plot in appendix.</p>
+
+<h3>Model Selection Process</h3>
+
+<p>The analysis starts with a simple regression model that includes transmission type.  Another two models get added to this simple model for each other variable involved; one with an extra variable besides transmission type and another with the interaction added.  Four statistics are gathered: Adjusted R-Sq, maximum p-value, transmission type coefficient value and the Shapiro normality test.  We then combine these statistics and output a table of results.  We select the model that satisfies highest adjusted R-Squared which satisfies a maximum p-value less than 10% significance level for all the variables and passes the normal residual test.</p>
+
+<p>I then repeat the addition of extra variables and select the best model and proceed with similar to what I have done before.  If I can&#39;t find any better model than what we already have then we stop and perform a residual analysis to make sure we have a satisfactory model.</p>
+
+<h2>Appendix</h2>
+
+<h3>Scatter Plots</h3>
+
+<pre><code class="r"># Visualize Data
+# Credit: http://gettinggeneticsdone.blogspot.com/2011/07/scatterplot-matrices-in-r.html
+panel.cor &lt;- function(x, y, digits=2, prefix=&quot;&quot;, cex.cor, ...) {
+    usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r &lt;- cor(x, y)
+    txt &lt;- format(c(r, 0.123456789), digits=digits)[1]
+    txt &lt;- paste(prefix, txt, sep=&quot;&quot;)
+    if(missing(cex.cor)) cex.cor &lt;- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * abs(r))
+}
+
+# Plot #2: same as above, but add loess smoother in lower and correlation in upper
+pairs(~., data=mtcars, lower.panel=panel.smooth, upper.panel=panel.cor, pch=20, main=&quot;Scatterplot Matrix&quot;)
+</code></pre>
+
+<p><img src="figure/ExploratoryAnalysis.png" alt="plot of chunk ExploratoryAnalysis"> </p>
+
+<h3>Model Selection Code</h3>
+
+<pre><code class="r"># Define function to select models&#39; results
+select_model_stats &lt;- function(formula) {
+    model &lt;- summary(lm(formula, data=mtcars));
+    list(formula       = paste0(formula, 
+                                paste0(rep(&#39; &#39;, max(nchar(formulas))-nchar(formula)), collapse=&quot;&quot;)),
+         adj.r.squared = model$adj.r.squared, 
+         max.p.value   = max(model$coefficients[,&quot;Pr(&gt;|t|)&quot;]), 
+         sign.am1      = model$coefficients[&quot;amManual&quot;,&quot;Estimate&quot;], 
+         shapiro.test  = shapiro.test(model$residuals)$p.value)
+}
+
+# Start with automatic vs. manual model
+formulas &lt;- c(&quot;mpg~am     &quot;, 
+              &quot;mpg~am + cyl &quot;, &quot;mpg~am + cyl  + am*cyl &quot;, &quot;mpg~am + disp&quot;, &quot;mpg~am + disp + am*disp&quot;,
+              &quot;mpg~am + hp  &quot;, &quot;mpg~am + hp   + am*hp  &quot;, &quot;mpg~am + drat&quot;, &quot;mpg~am + drat + am*drat&quot;,
+              &quot;mpg~am + wt  &quot;, &quot;mpg~am + wt   + am*wt  &quot;, &quot;mpg~am + qsec&quot;, &quot;mpg~am + qsec + am*qsec&quot;,
+              &quot;mpg~am + vs  &quot;, &quot;mpg~am + vs   + am*vs  &quot;, &quot;mpg~am + gear&quot;, &quot;mpg~am + gear + am*gear&quot;,
+              &quot;mpg~am + carb&quot;, &quot;mpg~am + carb + am*carb&quot; )
+models_results &lt;- lapply(formulas, select_model_stats)
+models_results &lt;- do.call(rbind.data.frame, models_results)
+row.names(models_results) &lt;- NULL
+models_results[models_results$max.p.value &lt;= 0.1 &amp; models_results$shapiro.test &gt; 0.05, ]
+
+# Select best model from previous round and rerun with other variables
+formulas &lt;- c(&quot;mpg~am + wt + am*wt       &quot;, 
+              &quot;mpg~am + wt + am*wt + cyl &quot;, &quot;mpg~am + wt + am*wt + disp&quot;, &quot;mpg~am + wt + am*wt + hp&quot;,
+              &quot;mpg~am + wt + am*wt + drat&quot;, &quot;mpg~am + wt + am*wt + qsec&quot;, &quot;mpg~am + wt + am*wt + vs&quot;,
+              &quot;mpg~am + wt + am*wt + gear&quot;, &quot;mpg~am + wt + am*wt + carb&quot;)
+models_results &lt;- lapply(formulas, select_model_stats)
+models_results &lt;- do.call(rbind.data.frame, models_results)
+row.names(models_results) &lt;- NULL
+models_results[models_results$max.p.value &lt;= 0.1 &amp; models_results$shapiro.test &gt; 0.05, ]
+</code></pre>
+
+</body>
+
+</html>
